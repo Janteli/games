@@ -1,0 +1,23 @@
+@layer utilities {
+    @keyframes moveClouds {
+      0% {
+        transform: translateX(100%);
+      }
+      100% {
+        transform: translateX(-400%);
+      }
+    }
+  
+    .animate-\[moveClouds_10s_linear_infinite\] {
+      animation: moveClouds 25s linear infinite;
+    }
+  
+    .animate-\[moveClouds_12s_linear_infinite\] {
+      animation: moveClouds 30s linear infinite;
+    }
+
+    .animate-\[moveClouds_14s_linear_infinite\] {
+        animation: moveClouds 15s linear infinite;
+      }
+  }
+  
