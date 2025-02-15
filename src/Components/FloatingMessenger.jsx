@@ -93,12 +93,12 @@ const FloatingMessenger = () => {
     <>
       <div
         className="fixed bottom-0 right-0 cursor-pointer shadow-md h-24 w-24 rounded-full overflow-hidden flex justify-center items-center"
-        style={{
-          transform: `translate(${position.x}px, ${position.y}px)`,
-          position: "absolute",
-          cursor: dragging ? "grabbing" : "grab",
-          boxShadow: dragging ? "0 4px 8px rgba(0, 0, 0, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.2)",
-        }}
+        // style={{
+        //   transform: `translate(${position.x}px, ${position.y}px)`,
+        //   position: "absolute",
+        //   cursor: dragging ? "grabbing" : "grab",
+        //   boxShadow: dragging ? "0 4px 8px rgba(0, 0, 0, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.2)",
+        // }}
         onMouseDown={handleMouseDown}
         onClick={toggleChat}
       >
