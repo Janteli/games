@@ -109,7 +109,7 @@ const FloatingMessenger = () => {
         <div
           className="fb-customerchat"
           attribution="setup_tool"
-          page_id="YOUR_PAGE_ID" // Replace with your Facebook Page ID
+          page_id="106521847743805" // Replace with your Facebook Page ID
           theme_color="#0084FF"
           logged_in_greeting="Hi! How can we help you?"
           logged_out_greeting="Hi! How can we help you?"
