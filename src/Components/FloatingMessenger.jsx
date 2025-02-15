@@ -19,13 +19,11 @@ const FloatingMessenger = () => {
     const handleMouseMove = (e) => {
       if (!dragging) return;
 
-      // Calculate new position
       let newX = e.clientX - offset.x;
       let newY = e.clientY - offset.y;
 
-      // Constrain position within viewport bounds
-      const maxX = window.innerWidth - 96; // 96px is the width of the element
-      const maxY = window.innerHeight - 96; // 96px is the height of the element
+      const maxX = window.innerWidth - 96;
+      const maxY = window.innerHeight - 96;
 
       newX = Math.max(0, Math.min(newX, maxX));
       newY = Math.max(0, Math.min(newY, maxY));
@@ -51,55 +49,67 @@ const FloatingMessenger = () => {
   const toggleChat = () => {
     if (window.FB) {
       setChatVisible(!chatVisible);
-      console.log("HELLO FROM MESSENGER");
+      console.log("Chat toggled.");
     } else {
       console.error("Facebook SDK not loaded yet.");
     }
   };
 
-  // Load Facebook SDK and initialize the chat plugin
   useEffect(() => {
+    if (window.FB) {
+      console.log("Facebook SDK already loaded.");
+      return;
+    }
+
     const script = document.createElement("script");
     script.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
     script.async = true;
-    document.body.appendChild(script);
+    script.defer = true;
+    script.crossOrigin = "anonymous";
 
-    window.fbAsyncInit = function () {
-      window.FB.init({
-        xfbml: true,
-        version: "v18.0",
-      });
+    script.onload = () => {
+      window.fbAsyncInit = function () {
+        window.FB.init({
+          xfbml: true,
+          version: "v18.0",
+        });
+        console.log("Facebook SDK loaded and initialized.");
+      };
     };
+
+    script.onerror = () => {
+      console.error("Failed to load Facebook SDK script.");
+    };
+
+    document.body.appendChild(script);
 
     return () => {
       document.body.removeChild(script);
-      delete window.fbAsyncInit; // Clean up the global function
+      delete window.fbAsyncInit;
     };
   }, []);
 
   return (
     <>
-      {/* Floating Messenger Button */}
       <div
         className="fixed bottom-0 right-0 cursor-pointer shadow-md h-24 w-24 rounded-full overflow-hidden flex justify-center items-center"
-        // style={{
-        //   transform: `translate(${position.x}px, ${position.y}px)`,
-        //   position: "absolute",
-        //   cursor: dragging ? "grabbing" : "grab",
-        //   boxShadow: dragging ? "0 4px 8px rgba(0, 0, 0, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.2)",
-        // }}
+        style={{
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          position: "absolute",
+          cursor: dragging ? "grabbing" : "grab",
+          boxShadow: dragging ? "0 4px 8px rgba(0, 0, 0, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.2)",
+        }}
         onMouseDown={handleMouseDown}
         onClick={toggleChat}
       >
         <img src={Chat} className="h-20 w-20 object-cover" alt="Chat Icon" />
       </div>
 
-      {/* Facebook Messenger Chat Plugin */}
       {chatVisible && (
         <div
           className="fb-customerchat"
           attribution="setup_tool"
-          page_id="106521847743805" // Replace with your Facebook Page ID
+          page_id="YOUR_PAGE_ID" // Replace with your Facebook Page ID
           theme_color="#0084FF"
           logged_in_greeting="Hi! How can we help you?"
           logged_out_greeting="Hi! How can we help you?"
