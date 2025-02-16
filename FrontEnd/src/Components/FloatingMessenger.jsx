@@ -61,30 +61,29 @@ const FloatingMessenger = () => {
       return;
     }
 
-    const script = document.createElement("script");
-    script.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
-    script.async = true;
-    script.defer = true;
-    script.crossOrigin = "anonymous";
-
-    script.onload = () => {
-      window.fbAsyncInit = function () {
-        window.FB.init({
-          xfbml: true,
-          version: "v18.0",
-        });
-        console.log("Facebook SDK loaded and initialized.");
-      };
+    // Load the Facebook SDK
+    window.fbAsyncInit = function () {
+      window.FB.init({
+        xfbml: true,
+        version: "v18.0",
+      });
+      console.log("Facebook SDK loaded and initialized.");
     };
 
-    script.onerror = () => {
-      console.error("Failed to load Facebook SDK script.");
-    };
-
-    document.body.appendChild(script);
+    (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
+      js.async = true;
+      js.defer = true;
+      js.crossOrigin = "anonymous";
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, "script", "facebook-jssdk");
 
     return () => {
-      document.body.removeChild(script);
       delete window.fbAsyncInit;
     };
   }, []);
@@ -93,12 +92,6 @@ const FloatingMessenger = () => {
     <>
       <div
         className="fixed bottom-0 right-0 cursor-pointer shadow-md h-24 w-24 rounded-full overflow-hidden flex justify-center items-center"
-        // style={{
-        //   transform: `translate(${position.x}px, ${position.y}px)`,
-        //   position: "absolute",
-        //   cursor: dragging ? "grabbing" : "grab",
-        //   boxShadow: dragging ? "0 4px 8px rgba(0, 0, 0, 0.3)" : "0 2px 4px rgba(0, 0, 0, 0.2)",
-        // }}
         onMouseDown={handleMouseDown}
         onClick={toggleChat}
       >
