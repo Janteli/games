@@ -51,16 +51,21 @@ const FloatingChat = () => {
 
   return (
     <>
+      {/* Floating Chat Button */}
       <div
-        className={`fixed bottom-5 right-5 cursor-pointer p-4 bg-blue-100 rounded-full ${showChat ? "hidden" : "block"}`}
+        className={`fixed bottom-5 right-5 cursor-pointer p-4 bg-blue-100 rounded-full ${
+          showChat ? "hidden" : "block"
+        }`}
         onClick={() => setShowChat(!showChat)}
       >
         <img src={ChatIcon} alt="Chat" width="40" />
       </div>
 
+      {/* Chat Box */}
       {showChat && (
-        <div className="fixed bottom-5 right-2 shadow-md rounded-lg w-96 bg-blue-500 p-6"
-        onMouseLeave={()=>setShowChat(false)}
+        <div
+          className="fixed bottom-5 right-2 shadow-md rounded-lg w-full sm:w-96 bg-blue-500 p-4 sm:p-6 transition-transform duration-600 transform translate-x-0"
+          onMouseLeave={() => setShowChat(false)}
         >
           <h1 className="text-center font-bold my-2 text-white">Chat</h1>
           <hr className="border-gray-300 my-4" />
@@ -85,14 +90,15 @@ const FloatingChat = () => {
             </div>
           </div>
 
+          {/* Input and Send Button */}
           <div className="flex mt-2">
             <input
               type="text"
-              className="border p-2 flex-1 outline-none border-gray-300 my-4 rounded-md text-black"
+              className="border p-2 flex-1 outline-none border-gray-300 my-2 sm:my-4 rounded-md text-black"
               value={text}
               onChange={(e) => setText(e.target.value)}
             />
-            <button className="bg-blue-500 text-white p-1 ml-2" onClick={sendMessage}>
+            <button className="bg-blue-500 text-white p-2 ml-2 rounded-md" onClick={sendMessage}>
               Send
             </button>
           </div>
