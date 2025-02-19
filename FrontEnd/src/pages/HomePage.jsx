@@ -159,15 +159,15 @@ const HomePage = () => {
             className="w-[200px] md:w-[280px] h-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
           />
 
-          {/* Coins */}
-          {[coin1, coin2, coin3, coin4, coin5, coin6, coin7, coin8, coin9, coin10, coin11, coin12, coin13, coin14, coin15].map((coin, i) => (
+          Coins
+          {/* {[coin1, coin2, coin3, coin4, coin5, coin6, coin7, coin8, coin9, coin10, coin11, coin12, coin13, coin14, coin15].map((coin, i) => (
             <img
               key={i}
               src={coin}
               alt="coin"
               className={`w-[40px] md:w-[100px] h-[40px] md:h-[100px] absolute ${i % 2 === 0 ? "left" : "right"}-${i % 3 === 0 ? "0" : i % 3 === 1 ? "10" : "20"} top-${i % 4 === 0 ? "0" : i % 4 === 1 ? "10" : "20"}`}
             />
-          ))}
+          ))} */}
         </div>
       </section>
 
