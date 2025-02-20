@@ -1,7 +1,16 @@
 import React, { useEffect, useState, useRef } from "react";
-import { collection, addDoc, onSnapshot, serverTimestamp, orderBy, query } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  serverTimestamp,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { db } from "../Components/firebase.js";
 import ChatIcon from "../assets/Chat.png";
+import { FaWhatsapp } from "react-icons/fa"; // Import WhatsApp icon from react-icons
+import "react-whatsapp-widget/dist/index.css";
 
 // ✅ Generate Unique ID for Clients (Without Authentication)
 const getClientId = () => {
@@ -22,7 +31,10 @@ const FloatingChat = () => {
 
   useEffect(() => {
     // ✅ Listen for Messages for this Client
-    const q = query(collection(db, `chats/${clientId}/messages`), orderBy("timestamp", "asc"));
+    const q = query(
+      collection(db, `chats/${clientId}/messages`),
+      orderBy("timestamp", "asc")
+    );
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setMessages(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
     });
@@ -49,16 +61,17 @@ const FloatingChat = () => {
     }
   };
 
+  // WhatsApp Chat Link
+  const whatsappLink = `https://wa.me/9864186550?text=Hello! I have a question.`;
+
   return (
     <>
-      {/* Floating Chat Button */}
+      {/* Floating WhatsApp Icon */}
       <div
-        className={`fixed bottom-5 right-5 cursor-pointer p-4 bg-blue-100 rounded-full ${
-          showChat ? "hidden" : "block"
-        }`}
-        onClick={() => setShowChat(!showChat)}
+        className="fixed bottom-5 right-5 cursor-pointer p-4 bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition-colors"
+        onClick={() => window.open(whatsappLink, "_blank")}
       >
-        <img src={ChatIcon} alt="Chat" width="40" />
+        <FaWhatsapp className="text-white text-3xl" /> {/* WhatsApp Icon */}
       </div>
 
       {/* Chat Box */}
@@ -94,11 +107,15 @@ const FloatingChat = () => {
           <div className="flex mt-2">
             <input
               type="text"
-              className="border p-2 flex-1 outline-none border-gray-300 my-2 sm:my-4 rounded-md text-black"
               value={text}
               onChange={(e) => setText(e.target.value)}
+              placeholder="Type a message..."
+              className="flex-1 p-2 border rounded-l-lg"
             />
-            <button className="bg-blue-500 text-white p-2 ml-2 rounded-md" onClick={sendMessage}>
+            <button
+              onClick={sendMessage}
+              className="bg-blue-600 text-white p-2 rounded-r-lg hover:bg-blue-700"
+            >
               Send
             </button>
           </div>
